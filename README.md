@@ -58,9 +58,9 @@ Combined the carousel with a **website layout**—a stylish header, navigation, 
 ---
 
 ## 📷 Preview
-  ![Carousel](media/card.png) 
- ![Carousel]( media/card2.png) 
- ![Header](media/card3.png) 
+  ![Carousel](media/card0.png) 
+ ![Carousel]( media/card1.png) 
+ ![Header](media/card2.png) 
 
 ---
 
