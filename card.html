@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Auto Sliding Gradient Carousel</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #ebcdcd;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .carousel {
+      width: 20vw;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .card {
+      width: 20vw;
+      height: 200px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      color: white;
+      font-weight: bold;
+    }
+
+    .card:nth-child(1) { background: linear-gradient(135deg, #ff6a00, #ee0979); }
+    .card:nth-child(2) { background: linear-gradient(135deg, #00c9ff, #92fe9d); }
+    .card:nth-child(3) { background: linear-gradient(135deg, #f7971e, #ffd200); }
+    .card:nth-child(4) { background: linear-gradient(135deg, #a1ffce, #faffd1); color: #000; }
+    .card:nth-child(5) { background: linear-gradient(135deg, #ff0844, #ffb199); }
+    .card:nth-child(6) { background: linear-gradient(135deg, #00f2fe, #4facfe); }
+
+    .radio-buttons {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .radio-buttons input[type="radio"] {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .radio-buttons input[type="radio"]:checked {
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="carousel">
+  <div class="carousel-track" id="track">
+    <div class="card">1</div>
+    <div class="card">2</div>
+    <div class="card">3</div>
+    <div class="card">4</div>
+    <div class="card">5</div>
+    <div class="card">6</div>
+  </div>
+</div>
+
+<div class="radio-buttons">
+  <input type="radio" name="slide" checked>
+  <input type="radio" name="slide">
+  <input type="radio" name="slide">
+  <input type="radio" name="slide">
+  <input type="radio" name="slide">
+  <input type="radio" name="slide">
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const radios = document.querySelectorAll('.radio-buttons input');
+  let index = 0;
+
+  function showSlide(i) {
+    track.style.transform = `translateX(-${i * 20}vw)`;
+    radios.forEach((r, j) => r.checked = j === i);
+  }
+
+  setInterval(() => {
+    index = (index + 1) % 6;
+    showSlide(index);
+  }, 3000); // 3 seconds delay
+</script>
+
+</body>
+</html>

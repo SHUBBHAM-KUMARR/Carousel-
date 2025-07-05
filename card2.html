@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smooth Carousel</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: rgba(255, 255, 255, 0.067);
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .carousel-box {
+      width: 760px; /* fits 6 cards of 120px + 10px gap */
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 2s ease-in-out;
+    }
+
+    .carousel-item {
+      display: flex;
+      gap: 10px;
+      width: 760px;
+      flex-shrink: 0;
+      padding: 10px;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sub-card {
+      width: 120px;
+      height: 180px;
+      border-radius: 5px;
+      flex-shrink: 0;
+      background: linear-gradient(45deg, #ff6a00, #ee0979);
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    /* Different gradient per item group */
+    .carousel-item:nth-child(2) .sub-card { background: linear-gradient(45deg, #43cea2, #185a9d); }
+    .carousel-item:nth-child(3) .sub-card { background: linear-gradient(45deg, #fc466b, #3f5efb); }
+    .carousel-item:nth-child(4) .sub-card { background: linear-gradient(45deg, #00c6ff, #0072ff); }
+    .carousel-item:nth-child(5) .sub-card { background: linear-gradient(45deg, #f7971e, #ffd200); }
+    .carousel-item:nth-child(6) .sub-card { background: linear-gradient(45deg, #12c2e9, #c471ed); }
+
+    .radio-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      gap: 10px;
+    }
+
+    .radio-buttons .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #888;
+      transition: background 0.3s;
+    }
+
+    .radio-buttons .dot.active {
+      background: #0f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="carousel-box">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="radio-buttons" id="radioBtns">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <script>
+    const track = document.getElementById("carouselTrack");
+    const dots = document.querySelectorAll(".dot");
+    let currentIndex = 0;
+    const total = 6;
+
+    function updateCarousel() {
+      track.style.transform = `translateX(-${currentIndex * 760}px)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentIndex);
+      });
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % total;
+        updateCarousel();
+      },3500); 
+    }
+
+    setTimeout(updateCarousel, 2500); // Initial delay
+  </script>
+
+</body>
+</html>

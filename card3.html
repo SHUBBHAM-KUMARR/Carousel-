@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NovaStyle</title>
+  <style>
+    *{
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+        display: flex;
+      /*justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column; */
+    }
+    header{
+      width: 100vw;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      background: linear-gradient(to right, #000000, #1a1a1a);
+      color: white;
+      height: 100px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .logo-icon {
+      font-size: 2.5rem;
+      margin-right: 10px;
+    }
+
+    .nav-center {
+      flex-grow: 1;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      font-size: 1rem;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #00d1ff;
+    }
+main{
+  display: flex;
+}
+    /* crousel */
+
+  #crsl{
+     position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  }
+    .carousel-box {
+      width: 760px; /* fits 6 cards of 120px + 10px gap */
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 2s ease-in-out;
+    }
+
+    .carousel-item {
+      display: flex;
+      gap: 10px;
+      width: 760px;
+      flex-shrink: 0;
+      padding: 10px;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .sub-card {
+      width: 120px;
+      height: 180px;
+      border-radius: 5px;
+      flex-shrink: 0;
+      background: linear-gradient(45deg, #ff6a00, #ee0979);
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    /* Different gradient per item group */
+    .carousel-item:nth-child(2) .sub-card { background: linear-gradient(45deg, #43cea2, #185a9d); }
+    .carousel-item:nth-child(3) .sub-card { background: linear-gradient(45deg, #fc466b, #3f5efb); }
+    .carousel-item:nth-child(4) .sub-card { background: linear-gradient(45deg, #00c6ff, #0072ff); }
+    .carousel-item:nth-child(5) .sub-card { background: linear-gradient(45deg, #f7971e, #ffd200); }
+    .carousel-item:nth-child(6) .sub-card { background: linear-gradient(45deg, #12c2e9, #c471ed); }
+
+    .radio-buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      gap: 10px;
+    }
+
+    .radio-buttons .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #888;
+      transition: background 0.3s;
+    }
+
+    .radio-buttons .dot.active {
+      background: #0f0;
+    }
+  </style>
+</head>
+<body>
+
+ <header>
+   <div class="navbar">
+    <div class="logo">
+      <span class="logo-icon">🌌</span>
+    </div>
+    <div class="nav-center">NovaStyle</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Products</a>
+      <a href="#">Gallery</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+ </header>
+<!-- crousel -->
+ <main>
+<section id="crsl">
+  
+  <div class="carousel-box">
+    <div class="carousel-track" id="carouselTrack">
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+        <div class="sub-card"></div><div class="sub-card"></div><div class="sub-card"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="radio-buttons" id="radioBtns">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</section>
+ </main>
+<script>
+  const track = document.getElementById("carouselTrack");
+    const dots = document.querySelectorAll(".dot");
+    let currentIndex = 0;
+    const total = 6;
+
+    function updateCarousel() {
+      track.style.transform = `translateX(-${currentIndex * 760}px)`;
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === currentIndex);
+      });
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % total;
+        updateCarousel();
+      }, 3000); // 3s delay + 2s animation
+    }
+
+    setTimeout(updateCarousel, 3000); // Initial delay
+</script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Glass Calculator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.2/math.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      color: #fff;
+      backdrop-filter: blur(5px);
+    }
+
+    .wrapper {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      max-width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .calculator, .history {
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .calculator {
+      padding: 20px;
+      width: 320px;
+      flex: 1 1 300px;
+    }
+
+    .display-box {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.6);
+    }
+
+    .preview {
+      font-size: 1em;
+      text-align: right;
+      color: #ccc;
+      height: 20px;
+    }
+
+    .input-display {
+      font-size: 1.8em;
+      text-align: right;
+      word-break: break-word;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    button {
+      padding: 16px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: rgb(230, 120, 120);
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: 0.2s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    button:hover {
+      background: rgba(113, 40, 40, 0.76);
+      transform: scale(1.05);
+    }
+
+    .clear {
+      background: rgba(231, 111, 111, 0.8);
+    }
+
+    .clear:hover {
+      background: rgba(255, 85, 85, 0.4);
+    }
+
+    .backspace {
+      background: rgba(255, 195, 0, 0.8);
+    }
+
+    .backspace:hover {
+      background: rgba(255, 195, 0, 0.4);
+    }
+
+    .equal {
+      background: rgba(40, 167, 69, 0.8);
+    }
+
+    .equal:hover {
+      background: rgba(40, 167, 69, 0.5);
+    }
+
+    .operator {
+      background: rgba(0, 122, 204, 0.8);
+    }
+
+    .operator:hover {
+      background: rgba(0, 122, 204, 0.45);
+    }
+
+    .history {
+      width: 220px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 200px;
+    }
+
+    .history h2 {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+      color: #f0f0f0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 8px;
+    }
+
+    .history-entry {
+      font-size: 1em;
+      color: #ddd;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 4px;
+    }
+
+    .clear-history-btn {
+      margin-top: 10px;
+      background: rgba(108, 117, 125, 0.8);
+      color: white;
+      padding: 8px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+
+    .clear-history-btn:hover {
+      background: rgba(108, 117, 125, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      .wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .calculator, .history {
+        width: 100%;
+      }
+
+      .history {
+        max-height: 200px;
+      }
+
+      button {
+        padding: 14px;
+        font-size: 1em;
+      }
+
+      .input-display {
+        font-size: 1.5em;
+      }
+
+      .preview {
+        font-size: 0.9em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="calculator">
+    <div class="display-box">
+      <div class="preview" id="preview"></div>
+      <div class="input-display" id="inputDisplay"></div>
+    </div>
+    <div class="buttons">
+      <button class="clear" style="grid-column: span 2;" onclick="clearDisplay()">C</button>
+      <button class="backspace" style="grid-column: span 2;" onclick="backspace()">⌫</button>
+
+      <button onclick="append('7')">7</button>
+      <button onclick="append('8')">8</button>
+      <button onclick="append('9')">9</button>
+      <button class="operator" onclick="append('÷')">÷</button>
+
+      <button onclick="append('4')">4</button>
+      <button onclick="append('5')">5</button>
+      <button onclick="append('6')">6</button>
+      <button class="operator" onclick="append('×')">×</button>
+
+      <button onclick="append('1')">1</button>
+      <button onclick="append('2')">2</button>
+      <button onclick="append('3')">3</button>
+      <button class="operator" onclick="append('-')">−</button>
+
+      <button onclick="append('0')">0</button>
+      <button onclick="append('.')">.</button>
+      <button class="equal" onclick="calculate()">=</button>
+      <button class="operator" onclick="append('+')">+</button>
+    </div>
+  </div>
+
+  <div class="history">
+    <h2>History</h2>
+    <div id="historyList"></div>
+    <button class="clear-history-btn" onclick="clearHistory()">Clear History</button>
+  </div>
+</div>
+
+<script>
+  let currentExpression = '';
+  const inputDisplay = document.getElementById('inputDisplay');
+  const preview = document.getElementById('preview');
+  const historyList = document.getElementById('historyList');
+
+  function append(value) {
+    currentExpression += value;
+    inputDisplay.textContent = currentExpression;
+    updatePreview();
+  }
+
+  function clearDisplay() {
+    currentExpression = '';
+    inputDisplay.textContent = '';
+    preview.textContent = '';
+  }
+
+  function backspace() {
+    currentExpression = currentExpression.slice(0, -1);
+    inputDisplay.textContent = currentExpression;
+    updatePreview();
+  }
+
+  function calculate() {
+    const shown = currentExpression;
+    const safeExpression = currentExpression.replace(/×/g, '*').replace(/÷/g, '/');
+
+    try {
+      const result = math.evaluate(safeExpression);
+      currentExpression = result.toString();
+      inputDisplay.textContent = currentExpression;
+      preview.textContent = '';
+      addHistoryEntry(`${shown} = ${result}`);
+      saveHistory();
+    } catch {
+      preview.textContent = 'Invalid';
+    }
+  }
+
+  function updatePreview() {
+    const expr = currentExpression.replace(/×/g, '*').replace(/÷/g, '/');
+    try {
+      if (expr && /[0-9)]$/.test(expr)) {
+        preview.textContent = math.evaluate(expr);
+      } else {
+        preview.textContent = '';
+      }
+    } catch {
+      preview.textContent = '';
+    }
+  }
+
+  function addHistoryEntry(text) {
+    const entry = document.createElement('div');
+    entry.className = 'history-entry';
+    entry.textContent = text;
+    historyList.prepend(entry);
+  }
+
+  function saveHistory() {
+    const entries = Array.from(historyList.children).map(el => el.textContent);
+    localStorage.setItem('calc-history', JSON.stringify(entries));
+  }
+
+  function loadHistory() {
+    const saved = JSON.parse(localStorage.getItem('calc-history') || '[]');
+    saved.forEach(addHistoryEntry);
+  }
+
+  function clearHistory() {
+    historyList.innerHTML = '';
+    localStorage.removeItem('calc-history');
+  }
+
+  window.onload = loadHistory;
+
+  window.addEventListener('keydown', (e) => {
+    const key = e.key;
+    if (!isNaN(key) || ['+', '-', '*', '/', '.', '(', ')'].includes(key)) {
+      append(key === '*' ? '×' : key === '/' ? '÷' : key);
+    } else if (key === 'Enter') {
+      calculate();
+    } else if (key === 'Backspace') {
+      backspace();
+    } else if (key === 'Escape') {
+      clearDisplay();
+    }
+  });
+</script>
+
+</body>
+</html>
